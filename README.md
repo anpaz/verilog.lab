@@ -11,12 +11,29 @@ https://itsembedded.com/dhd/verilator_1/
     Namely:
     - Create verilog file (.sv)
     - Create main driver (testbed) in C++
-    * Driver create instance of DUT
-    * Updates signals
-    * Collects traces
-    * Dumps traces into waveform file
+        * Driver create instance of DUT
+        * Updates signals
+        * Collects traces
+        * Dumps traces into waveform file
     - Use verilog to compile into C++
     - Use gcc to compile into executable
-    - Run
+    - Run make (Makefile has all build/run instructions)
     - Use gtkwave to visualize trace (waveform)
 
+Instructions to burn blinky into FPGA
+Based on https://github.com/nesl/ice40_examples
+    - Install tools:
+        * Install yosys (synthesize)
+        * arachne-pnr (place and route)
+        * IceStorm (convert to bitstream)
+        * Install Alchitry Labs (https://alchitry.com/alchitry-labs) on Windows 
+          to get Alchitry Loader (to upload .bin file into board)
+    - Copied blinky from ice40_examples
+        * Modified footprint on Makefile to cb132 (guessed based on the label in the schematics)
+        * Updated pins in pinmap.pcf based on schematics (https://cdn.alchitry.com/docs/alchitry_cu_sch.pdf)
+        * Ended updating top.v to use the highest bits of counter
+    - Run make (Makefile has all build/run instructions)
+    - Opened Alchitry Loader from Windows, uploaded to CU from there.
+
+Notes:
+   - RST button is 0 when pressed, and 1 when not.

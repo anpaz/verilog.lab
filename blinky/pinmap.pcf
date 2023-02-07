@@ -1,0 +1,11 @@
+# example.pcf
+set_io --warn-no-port led1 J11
+set_io --warn-no-port led2 K11
+set_io --warn-no-port led3 K12
+set_io --warn-no-port led4 K14
+set_io --warn-no-port led5 L12
+set_io --warn-no-port led6 L14
+set_io --warn-no-port led7 M12
+set_io --warn-no-port led8 N14
+set_io --warn-no-port hwclk P7
+set_io --warn-no-port rst P8
