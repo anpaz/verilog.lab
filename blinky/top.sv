@@ -1,6 +1,6 @@
 // Blink an LED provided an input clock
 /* module */
-module top (hwclk, rst, led1, led2, led3, led4, led5, led6, led7, led8 );
+module top #(parameter OFFSET=24) (hwclk, rst, led1, led2, led3, led4, led5, led6, led7, led8);
     /* I/O */
     input hwclk;
     input rst;
@@ -18,14 +18,14 @@ module top (hwclk, rst, led1, led2, led3, led4, led5, led6, led7, led8 );
     reg [31:0] counter = 32'b0;
 
     /* LED drivers */
-    assign led1 = counter[24];
-    assign led2 = counter[25];
-    assign led3 = counter[26];
-    assign led4 = counter[27];
-    assign led5 = counter[28];
-    assign led6 = counter[29];
-    assign led7 = counter[30];
-    assign led8 = counter[31];
+    assign led1 = counter[OFFSET + 0];
+    assign led2 = counter[OFFSET + 1];
+    assign led3 = counter[OFFSET + 2];
+    assign led4 = counter[OFFSET + 3];
+    assign led5 = counter[OFFSET + 4];
+    assign led6 = counter[OFFSET + 5];
+    assign led7 = counter[OFFSET + 6];
+    assign led8 = counter[OFFSET + 7];
 
     /* always */
     always @ (posedge hwclk) begin
