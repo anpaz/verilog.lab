@@ -5,6 +5,13 @@ https://itnext.io/risc-v-instruction-set-cheatsheet-70961b4bbe8
 RISC-V spec:
 https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf
 
+Verilog intros:
+   https://en.wikibooks.org/wiki/Programmable_Logic/Verilog
+   https://docs.google.com/presentation/d/1Z2lC78etDyXQkNJCCm7jh33dabxklBc_uDffrtLVkDc/edit#slide=id.p1
+   https://docs.google.com/presentation/d/1O38ivIfXeno3Cbbqb6LALjxkZoOjbUXKm6_47x9xqJw/edit#slide=id.p1
+   logic vs wire vs reg: https://www.verilogpro.com/verilog-reg-verilog-wire-systemverilog-logic/
+
+
 
 Instructions on how to use Verilator:
 https://itsembedded.com/dhd/verilator_1/
