@@ -7,5 +7,5 @@ set_io --warn-no-port led5 L12
 set_io --warn-no-port led6 L14
 set_io --warn-no-port led7 M12
 set_io --warn-no-port led8 N14
-set_io --warn-no-port hwclk P7
+set_io --warn-no-port clk P7
 set_io --warn-no-port rst P8

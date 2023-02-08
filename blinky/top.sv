@@ -1,8 +1,8 @@
 // Blink an LED provided an input clock
 /* module */
-module top #(parameter OFFSET=24) (hwclk, rst, led1, led2, led3, led4, led5, led6, led7, led8);
+module top #(parameter OFFSET=24) (clk, rst, led1, led2, led3, led4, led5, led6, led7, led8);
     /* I/O */
-    input hwclk;
+    input clk;
     input rst;
 
     output led1;
@@ -28,9 +28,9 @@ module top #(parameter OFFSET=24) (hwclk, rst, led1, led2, led3, led4, led5, led
     assign led8 = counter[OFFSET + 7];
 
     /* always */
-    always @ (posedge hwclk) begin
+    always @ (posedge clk) begin
         // Only increase counter when RST is pressed.
-        if (rst == 1'b1) begin
+        if (rst == 1'b0) begin
             counter <= 0;
         end else begin
             counter <= counter + 1;
