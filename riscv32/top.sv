@@ -2,11 +2,10 @@
 /* module */
 typedef enum [1:0] {STATE_INIT, STATE_UPDATE, STATE_COMPLETE} cpu_state;
 
-module top #(parameter WIDTH=32) (clk, rst, opcode, rd, rs1, imm12, out, led);
+module top #(parameter WIDTH=32) (clk, reset, opcode, rd, rs1, imm12, out, led);
     /* I/O */
     input clk;
-    input rst;
-    // input rst;
+    input reset;
 
     input [2:0] opcode;
     input [4:0] rd;
@@ -39,7 +38,7 @@ module top #(parameter WIDTH=32) (clk, rst, opcode, rd, rs1, imm12, out, led);
 
     memory #(.WIDTH(WIDTH)) data_registers (
         .clk(clk),
-        .rst(rst),
+        .reset(reset),
         .data(alu_out),
         .location_read(reg_location_read),
         .location_write(reg_location_write),
@@ -53,7 +52,7 @@ module top #(parameter WIDTH=32) (clk, rst, opcode, rd, rs1, imm12, out, led);
 
     /* always */
     always @ (posedge clk) begin
-        if (rst) begin
+        if (reset) begin
             curr_state <= STATE_COMPLETE;
         end else
             case (curr_state)
