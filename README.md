@@ -11,7 +11,27 @@ Verilog intros:
    https://docs.google.com/presentation/d/1O38ivIfXeno3Cbbqb6LALjxkZoOjbUXKm6_47x9xqJw/edit#slide=id.p1
    logic vs wire vs reg: https://www.verilogpro.com/verilog-reg-verilog-wire-systemverilog-logic/
 
-
+Notes:
+  - Verilog creates an electronic circuit
+        * logic/reg are flipflops to store data
+        * wires are literal wires
+        * inputs/outputs are the corresponding input/output wires of a module
+        * a module is like a chip
+  - always_comb just creates a static circuit to reflect the logic
+        *it is not time based: the status of the registry/wires is static based on the values in the input
+  - always_ff creates a time-based circuit. 
+        * Notice the conditions are evaluated in time t,
+          the assignments happen in t+1, for example, given:
+            `if (reset) x <= y`
+          then the update (`x <= y`) will happen at t+1, if at time t 
+          `reset` is on
+        * t is the state right before clock positive edge, t+1 are the 
+          values after the clock is high again:
+                             ======================
+                            |
+                t           |        t + 1
+                            |
+          ==================
 
 Instructions on how to use Verilator:
 https://itsembedded.com/dhd/verilator_1/
