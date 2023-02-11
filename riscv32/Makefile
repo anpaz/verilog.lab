@@ -19,7 +19,7 @@ $(BUILD)/V$(MODULE): .stamp.verilate
 
 # Verilate module:
 .stamp.verilate: $(FILES) tb_$(MODULE).cpp
-	verilator -Wall --trace --Mdir $(BUILD) -cc $(FILES) -GWIDTH=16 --exe tb_$(MODULE).cpp
+	verilator -Wall --trace --Mdir $(BUILD) -GWIDTH=16 --exe tb_$(MODULE).cpp -cc $(FILES)
 
 # Generate waveform from simulation and open it in gtkwave
 waves: waveform.vcd

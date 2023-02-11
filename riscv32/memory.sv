@@ -12,13 +12,18 @@ module memory #(parameter WIDTH=32, SIZE=4) (clk, reset, write_enabled, write_lo
     output [WIDTH-1:0] read1_data;
     output [WIDTH-1:0] read2_data;
 
-    /* data storage */
+    /* data storage, somehow verilator uses a different syntax: */
+`ifdef verilator
     reg [SIZE-1:0][WIDTH-1:0] registers;
-    integer  i;
+`else
+    reg registers[SIZE-1:0][WIDTH-1:0];
+`endif
+
 
     /* update register if write_enabled */
     always_ff @( posedge clk ) begin
         if (reset) begin
+            integer  i;
             for (i = 0; i < SIZE; i=i+1) begin
                 registers[i] <= 0;
             end

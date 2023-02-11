@@ -1,6 +1,5 @@
 // Arithmetic and Logic Unit
 
-typedef enum [2:0] {CONST, ADD, SUBSTRACT} alu_ops;
 
 /* module */
 module alu #(parameter WIDTH=32) (op, x, y, out);
@@ -11,7 +10,11 @@ module alu #(parameter WIDTH=32) (op, x, y, out);
 
     output [WIDTH-1:0] out;
 
+    localparam ZERO = 0;
+    localparam ADD = 1;
+    localparam SUBSTRACT = 2;
+
     assign out = (op == ADD) ? x + y :
                  (op == SUBSTRACT) ? x - y :
-                 y;
+                 0;
 endmodule
