@@ -8,6 +8,15 @@
 #define MAX_SIM_TIME 1000
 vluint64_t sim_time = 0;
 
+
+#define ADD 1
+#define SUBS 2
+#define LESSTHAN 3
+
+#define ADDI 11
+#define SUBSI 12
+#define LESSTHANI 13
+
 void click(Vtop* dut, VerilatedVcdC *m_trace) {
     uint ticks = 0;
 
@@ -34,8 +43,9 @@ int main(int argc, char** argv, char** env) {
     dut->reset = 0;
     dut->rd = 2;
     dut->rs1 = 1;
+    dut->rs2 = 2;
     dut->imm12 = 1;
-    dut->opcode = 1;
+    dut->opcode = ADDI;
     click(dut, m_trace);
     
     int count = 0;
@@ -45,8 +55,13 @@ int main(int argc, char** argv, char** env) {
         dut->reset = 0;
         dut->rd = (count % 2) + 1;
         dut->rs1 = 1;
+        dut->rs2 = dut->rd;
         dut->imm12 = value;
-        dut->opcode = count < 10 ? 1 : 2;
+        dut->opcode = 
+            count < 5 ? ADDI : 
+            count < 10 ? ADD :
+            count < 15 ? SUBS :
+            SUBSI;
         click(dut, m_trace);
 
         count = (count + 1) % 20;

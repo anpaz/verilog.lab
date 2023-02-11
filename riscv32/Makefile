@@ -11,7 +11,7 @@ FILES = top.sv alu.sv memory.sv
 # Top level parameters to override fro simulation
 # -- none -- 
 
-.PHONY: build clean verilate pack sim
+.PHONY: build clean verilate pack sim graph
 
 # Verilator simulation exe:
 $(BUILD)/V$(MODULE): .stamp.verilate
@@ -42,6 +42,14 @@ $(BUILD)/$(PROJ).bin: $(FILES)
 
 clean:
 	rm build/*
+
+dot:
+	yosys \
+		-p "read_verilog -sv -formal $(FILES)" \
+		-p "hierarchy -check -top top" \
+		-p "proc" \
+		-p "show -prefix $(PROJ) -notitle -colors 2 -width -format dot"
+	xdot $(PROJ).dot
 
 verilate: .stamp.verilate
 sim: waveform.vcd

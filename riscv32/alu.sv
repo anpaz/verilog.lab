@@ -1,5 +1,8 @@
 // Arithmetic and Logic Unit
 
+parameter ZERO = 0;
+parameter ADD = 1;
+parameter SUBSTRACT = 2;
 
 /* module */
 module alu #(parameter WIDTH=32) (op, x, y, out);
@@ -10,9 +13,6 @@ module alu #(parameter WIDTH=32) (op, x, y, out);
 
     output [WIDTH-1:0] out;
 
-    localparam ZERO = 0;
-    localparam ADD = 1;
-    localparam SUBSTRACT = 2;
 
     assign out = (op == ADD) ? x + y :
                  (op == SUBSTRACT) ? x - y :

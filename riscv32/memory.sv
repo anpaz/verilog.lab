@@ -1,16 +1,16 @@
 // Data Registers
 /* module */
-module memory #(parameter WIDTH=32, SIZE=4) (clk, reset, write_enabled, write_location, write_data, read1_location, read1_data, read2_location, read2_data);
+module memory #(parameter WIDTH=32, SIZE=4) (clk, reset, write_enabled, write_location, write_data, read1_location, read1_out, read2_location, read2_out);
     /* I/O */
     input clk;
     input reset;
+    input write_enabled;
     input [WIDTH-1:0] write_data;
     input [4:0] write_location;
-    input write_enabled;
     input [4:0] read1_location;
     input [4:0] read2_location;
-    output [WIDTH-1:0] read1_data;
-    output [WIDTH-1:0] read2_data;
+    output [WIDTH-1:0] read1_out;
+    output [WIDTH-1:0] read2_out;
 
     /* data storage, somehow verilator uses a different syntax: */
 `ifdef verilator
@@ -35,7 +35,7 @@ module memory #(parameter WIDTH=32, SIZE=4) (clk, reset, write_enabled, write_lo
     end
 
     //assign out = out_buffer;
-    assign read1_data = registers[read1_location];
-    assign read2_data = registers[read2_location];
+    assign read1_out = registers[read1_location];
+    assign read2_out = registers[read2_location];
 
 endmodule
