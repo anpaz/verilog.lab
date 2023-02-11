@@ -1,6 +1,5 @@
 // Entry point
 /* module */
-typedef enum [1:0] {STATE_INIT, STATE_UPDATE, STATE_COMPLETE} cpu_state;
 
 module top #(parameter WIDTH=32) (clk, reset, opcode, rd, rs1, imm12, out, led);
     /* I/O */
@@ -19,7 +18,8 @@ module top #(parameter WIDTH=32) (clk, reset, opcode, rd, rs1, imm12, out, led);
     output [7:0] led;
 
     logic reg_write_enabled;
-    wire  [WIDTH-1:0] reg_out;
+    wire  [WIDTH-1:0] reg_out1;
+    //wire  [WIDTH-1:0] reg_out2;
     logic [4:0] reg_location_read;
     logic [4:0] reg_location_write;
 
@@ -29,21 +29,31 @@ module top #(parameter WIDTH=32) (clk, reset, opcode, rd, rs1, imm12, out, led);
     wire [WIDTH-1:0] alu_out;
 
     reg [1:0] curr_state;
+    reg [WIDTH-1:0] curr_out;
+
+    localparam STATE_INIT     = 0;
+    localparam STATE_UPDATE   = 1;
+    localparam STATE_COMPLETE = 2;
+
 
     alu #(.WIDTH(WIDTH)) alu (
         .op(alu_op),
-        .x(reg_out),
+        .x(reg_out1),
         .y(imm_data),
-        .out(alu_out));
+        .out(alu_out)
+    );
 
     memory #(.WIDTH(WIDTH)) data_registers (
         .clk(clk),
         .reset(reset),
-        .data(alu_out),
-        .location_read(reg_location_read),
-        .location_write(reg_location_write),
+        .write_data(alu_out),
+        .write_location(reg_location_write),
         .write_enabled(reg_write_enabled),
-        .out(reg_out));
+        .read1_location(reg_location_read),
+        .read1_data(reg_out1),
+        .read2_location(reg_location_read),
+        .read2_data(reg_out1)
+    );
 
     assign imm_data[WIDTH-1:12] = 0;
     assign imm_data[11:0] = imm12;
@@ -54,30 +64,32 @@ module top #(parameter WIDTH=32) (clk, reset, opcode, rd, rs1, imm12, out, led);
     always @ (posedge clk) begin
         if (reset) begin
             curr_state <= STATE_COMPLETE;
-        end else
+            curr_out <= reg_out1;
+        end else begin
             case (curr_state)
-                STATE_COMPLETE:
+                STATE_INIT: begin
+                    curr_state <= STATE_UPDATE;
+                    reg_location_read <= rs1;
+                    reg_location_write <= rd;
+                    reg_write_enabled <= 1;
+                end
+                STATE_UPDATE: begin
+                    curr_state <= STATE_COMPLETE;
+                    reg_write_enabled <= 0;
+                    reg_location_read <= rd;
+                end
+                default: begin
                     curr_state <= STATE_INIT;
-                default: 
-                    curr_state <= curr_state + 1;
+                    reg_location_read <= rd;
+                    reg_write_enabled <= 0;
+                    curr_out <= reg_out1;
+                end
             endcase
-    end
-
-    /* always */
-    assign reg_location_read = rs1;
-    always @ (posedge clk) begin
-        case (curr_state)
-            STATE_INIT: begin
-                reg_location_write <= rd;
-                reg_write_enabled <= 1;
-            end default: begin
-                reg_write_enabled <= 0;
-            end
-        endcase
+        end
     end
 
     /* LED output */
-    assign out = reg_out;
+    assign out = curr_out;
     assign led[7:0] = out[7:0];
 
 endmodule

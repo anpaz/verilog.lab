@@ -20,7 +20,7 @@ Notes:
   - always_comb just creates a static circuit to reflect the logic
         *it is not time based: the status of the registry/wires is static based on the values in the input
   - always_ff creates a time-based circuit. 
-        * Notice the conditions are evaluated in time t,
+        * Notice the conditions are evaluated in time t, but
           the assignments happen in t+1, for example, given:
             `if (reset) x <= y`
           then the update (`x <= y`) will happen at t+1, if at time t 

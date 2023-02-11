@@ -1,14 +1,16 @@
 // Data Registers
 /* module */
-module memory #(parameter WIDTH=32, SIZE=4) (clk, reset, data, location_read, location_write, write_enabled, out);
+module memory #(parameter WIDTH=32, SIZE=4) (clk, reset, write_enabled, write_location, write_data, read1_location, read1_data, read2_location, read2_data);
     /* I/O */
     input clk;
     input reset;
-    input [WIDTH-1:0] data;
-    input [4:0] location_read;
-    input [4:0] location_write;
+    input [WIDTH-1:0] write_data;
+    input [4:0] write_location;
     input write_enabled;
-    output [WIDTH-1:0] out;
+    input [4:0] read1_location;
+    input [4:0] read2_location;
+    output [WIDTH-1:0] read1_data;
+    output [WIDTH-1:0] read2_data;
 
     /* data storage */
     reg [SIZE-1:0][WIDTH-1:0] registers;
@@ -22,12 +24,13 @@ module memory #(parameter WIDTH=32, SIZE=4) (clk, reset, data, location_read, lo
             end
         end else begin 
             if (write_enabled) begin
-                registers[location_write] <= data;
+                registers[write_location] <= write_data;
             end
         end
     end
 
     //assign out = out_buffer;
-    assign out = registers[location_read];
+    assign read1_data = registers[read1_location];
+    assign read2_data = registers[read2_location];
 
 endmodule

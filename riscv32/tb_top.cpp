@@ -38,12 +38,6 @@ int main(int argc, char** argv, char** env) {
     dut->opcode = 1;
     click(dut, m_trace);
     
-    dut->rd = 1;
-    dut->rs1 = 1;
-    dut->imm12 = 1;
-    dut->opcode = 1;
-    click(dut, m_trace);
-
     int count = 0;
     int value = 1;
 
@@ -56,12 +50,7 @@ int main(int argc, char** argv, char** env) {
         click(dut, m_trace);
 
         count = (count + 1) % 20;
-        value = value * 2;
-
-        if (value > 0x100) 
-        {
-            value = 1;
-        }
+        value = (value >= 0x800) ? 1 : value * 2;
 
         if (count == 0) {
             dut->reset = 1;
