@@ -63,6 +63,20 @@ int main(int argc, char** argv, char** env) {
             count < 15 ? SUBS :
             SUBSI;
         click(dut, m_trace);
+        
+        dut->rd = 3;
+        dut->rs1 = 1;
+        dut->rs2 = 2;
+        dut->imm12 = value;
+        dut->opcode = LESSTHAN;
+        click(dut, m_trace);
+
+        dut->rd = 3;
+        dut->rs1 = 1;
+        dut->rs2 = 2;
+        dut->imm12 = value;
+        dut->opcode = LESSTHANI;
+        click(dut, m_trace);
 
         count = (count + 1) % 20;
         value = (value >= 0x800) ? 1 : value * 2;

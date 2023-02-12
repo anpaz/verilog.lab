@@ -111,12 +111,20 @@ module top #(parameter WIDTH=32) (clk, reset, opcode, rd, rs1, rs2, imm12, out, 
                 alu_op <= SUBSTRACT;
                 alu_y <= reg_out2;
             end
+            OPCODE_LESSTHAN: begin
+                alu_op <= LESSTHAN;
+                alu_y <= reg_out2;
+            end
             OPCODE_ADDI: begin
                 alu_op <= ADD;
                 alu_y <= imm_data;
             end
             OPCODE_SUBSI: begin
                 alu_op <= SUBSTRACT;
+                alu_y <= imm_data;
+            end
+            OPCODE_LESSTHANI: begin
+                alu_op <= LESSTHAN;
                 alu_y <= imm_data;
             end
         endcase

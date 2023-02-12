@@ -13,12 +13,14 @@ Verilog intros:
 
 Notes:
   - Verilog creates an electronic circuit
+    * a module is like a chip
     * logic/reg are flipflops to store data
     * wires are literal wires
     * inputs/outputs are the corresponding input/output wires of a module
-    * a module is like a chip
+    * `if` and `case` are mapped to mux
+    * arith and logic expressions are mapped to circuits
   - always_comb just creates a static circuit to reflect the logic
-    *it is not time based: the status of the registry/wires is static based on the values in the input
+    * it is not time based: the status of the registry/wires is static based on the values in the input
   - always_ff creates a time-based circuit. 
     * Notice the conditions are evaluated in time t, but
       the assignments happen in t+1, for example, given:<br>
@@ -27,17 +29,13 @@ Notes:
       `reset` is on
     * t is the state right before clock positive edge, t+1 are the 
       values after the clock is high again:
-```
+      ```
                              ======================
                             |
                 t           |        t + 1
                             |
           ==================
-```
-  - the entire circuit is a state machine, all gates need to be fully specified.
-     * `if` and `case` are mapped to mux
-     * variables are mapped to flipflos
-     * arith and logic expressions are mapped to circuits
+      ```
 
 # Instructions on how to use Verilator
 
