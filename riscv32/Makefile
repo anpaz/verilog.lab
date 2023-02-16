@@ -57,3 +57,4 @@ pack: $(BUILD)/$(PROJ).bin
 
 build: $(BUILD)/$(PROJ).bin $(BUILD)/V$(MODULE)
 
+# Might need for Mac: export SDKROOT="$(xcrun --sdk macosx --show-sdk-path)"

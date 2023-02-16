@@ -127,6 +127,8 @@ module top #(parameter WIDTH=32) (clk, reset, opcode, rd, rs1, rs2, imm12, out, 
                 alu_op <= LESSTHAN;
                 alu_y <= imm_data;
             end
+            default:
+                alu_op <= ZERO;
         endcase
     end
 
